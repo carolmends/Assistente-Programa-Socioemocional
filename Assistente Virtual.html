@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Carol – Assistente virtual do Programa Socioemocional da Impare Educação</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  background:#fff3e6;
+  font-family:Arial, sans-serif;
+}
+
+header{
+  background:#f57c00;
+  color:white;
+  padding:16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.avatar{
+  width:56px;
+  height:56px;
+  border-radius:10px;
+  background:#eceff1;
+  position:relative;
+  box-shadow:0 0 0 3px #ffb74d;
+}
+
+.avatar::before{
+  content:"";
+  position:absolute;
+  top:-10px;
+  left:50%;
+  width:6px;
+  height:10px;
+  background:#ff9800;
+  transform:translateX(-50%);
+}
+
+.avatar::after{
+  content:"";
+  position:absolute;
+  top:-16px;
+  left:50%;
+  width:12px;
+  height:12px;
+  background:#ff9800;
+  border-radius:50%;
+  transform:translateX(-50%);
+}
+
+.eye{
+  width:10px;
+  height:10px;
+  background:#ff9800;
+  border-radius:50%;
+  position:absolute;
+  top:18px;
+}
+.eye.left{ left:14px; }
+.eye.right{ right:14px; }
+
+.mouth{
+  width:22px;
+  height:10px;
+  border-bottom:3px solid #ff9800;
+  border-radius:0 0 20px 20px;
+  position:absolute;
+  bottom:14px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+#chat{
+  padding:20px;
+  height:68vh;
+  overflow-y:auto;
+}
+
+.bot{
+  background:white;
+  border-left:5px solid #f57c00;
+  padding:16px;
+  border-radius:8px;
+  margin-bottom:14px;
+  max-width:90%;
+  line-height:1.6;
+}
+
+.bot strong{
+  display:block;
+  margin-top:12px;
+}
+
+.bot p{
+  margin:6px 0 14px 0;
+}
+
+.user{
+  background:#ffe0b2;
+  padding:14px;
+  border-radius:8px;
+  margin-bottom:12px;
+  margin-left:auto;
+  max-width:90%;
+}
+
+#input-area{
+  display:flex;
+  border-top:1px solid #ffcc80;
+}
+
+input{
+  flex:1;
+  padding:16px;
+  border:none;
+  font-size:16px;
+}
+
+button{
+  padding:16px;
+  background:#f57c00;
+  color:white;
+  border:none;
+  font-size:16px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="avatar">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="mouth"></div>
+  </div>
+  <div>
+    <strong>Carol</strong><br>
+    Assistente virtual do Programa Socioemocional da Impare Educação
+  </div>
+</header>
+
+<div id="chat"></div>
+
+<div id="input-area">
+  <input id="input" placeholder="Digite o número da opção…">
+  <button onclick="enviar()">Enviar</button>
+</div>
+
+<script>
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
+
+/* Funções de chat */
+function bot(html){
+  const div = document.createElement("div");
+  div.className = "bot";
+  div.innerHTML = html;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function user(texto){
+  const div = document.createElement("div");
+  div.className = "user";
+  div.innerText = texto;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+/* >>> FUNÇÃO DE APRESENTAÇÃO <<< */
+function apresentacao(){
+  bot(`<strong>Olá! 😊 Sou a Carol, assistente virtual do Programa Socioemocional da Impare Educação.</strong>`);
+}
+
+/* Menu principal */
+function mostrarMenu(){
+  bot(`
+<strong>🤖 Como posso te ajudar?</strong>
+<p>Digite o número da opção que você deseja saber mais:</p>
+
+<p>
+1️⃣ Programa Socioemocional<br>
+2️⃣ Propostas Pedagógicas do Programa Socioemocional<br>
+3️⃣ Materiais do Programa Socioemocional<br>
+4️⃣ Ambiente Virtual do Programa Socioemocional<br>
+5️⃣ Curso EaD e encontros do Programa Socioemocional<br>
+6️⃣ Grupos de WhatsApp do Programa Socioemocional<br>
+7️⃣ Avaliação e certificação do Programa Socioemocional<br>
+8️⃣ Prazos do Programa Socioemocional<br>
+9️⃣ Suporte e contato do Programa Socioemocional
+</p>
+  `);
+}
+
+/* Sessão de voltar ao menu */
+function finalizarSessao(){
+  bot(`
+<strong>👉 Para voltar ao menu principal</strong>
+<p>Digite:</p>
+<p>0️⃣ Voltar ao menu</p>
+  `);
+}
+
+/* Função de envio */
+function enviar(){
+  const texto = input.value.trim();
+  if(!texto) return;
+  input.value="";
+  user(texto);
+
+  if(texto === "0"){
+    mostrarMenu();
+    return;
+  }
+
+  if(texto === "1"){
+    bot(`📘 <strong>SOBRE O PROGRAMA SOCIOEMOCIONAL</strong>
+<strong>O que é o Programa Socioemocional da Impare Educação?</strong>
+<p>É um programa que oferece suporte metodológico e tecnológico, em formato híbrido, para o desenvolvimento das competências socioemocionais das crianças, por meio de práticas pedagógicas sensíveis e integradas ao cotidiano escolar.</p>
+<strong>Quem pode participar do programa?</strong>
+<p>Gestores escolares, professores e monitores da Educação Infantil do município de Iacanga/SP.</p>
+<strong>O programa substitui o currículo da escola?</strong>
+<p>Não. O programa complementa as práticas pedagógicas, fortalecendo o desenvolvimento socioemocional por meio de propostas integradas à rotina escolar.</p>
+<strong>As atividades são obrigatórias?</strong>
+<p>As propostas fazem parte do programa e devem ser desenvolvidas ao longo do período de participação, respeitando a organização da escola e da turma para validar a certificação.</p>
+<strong>Quando finaliza o programa?</strong>
+<p>O programa finaliza em novembro de 2026.</p>`);
+    finalizarSessao();
+  }
+
+  else if(texto === "2"){
+    bot(`📚 <strong>SOBRE AS PROPOSTAS PEDAGÓGICAS DO PROGRAMA SOCIOEMOCIONAL</strong>
+<strong>O que são as Sequências Didáticas?</strong>
+<p>São propostas organizadas com intencionalidade pedagógica, pensadas para desenvolver competências socioemocionais por meio de atividades estruturadas e progressivas.</p>
+<strong>Posso baixar as Sequências Didáticas?</strong>
+<p>Sim, todas as Sequências Didáticas podem ser baixadas e utilizadas em modelo de PDF.</p>
+<strong>O que são as Atividades Permanentes?</strong>
+<p>São atividades de curta duração, que podem ser realizadas com frequência ao longo do ano.</p>
+<strong>O que são os Projetos Interdisciplinares?</strong>
+<p>São propostas que articulam diferentes áreas do conhecimento, promovendo reflexões sobre si, o outro e o mundo de forma integrada. A sugestão é que os professores as realizem após a conclusão das 12 Sequências Didáticas oferecidas no programa.</p>
+<strong>Como são organizadas as Sequências Didáticas?</strong> 
+<p>Cada Sequência Didática é organizada em cinco etapas.</p>
+<strong>Com que frequência devo realizar as Sequências Didáticas?</strong>
+<p>Cada etapa poderá ser realizada em um dia da semana, ou seja, de segunda-feira a sexta-feira é possível realizar uma Sequência Didática completa.</p>
+<strong>As Sequências Didáticas possuem recursos disponíveis?</strong>
+<p>Sim, estão disponíveis no ambiente virtual e podem ser baixados.</p>
+<strong>As atividades podem ser adaptadas à realidade da turma?</strong>
+<p>Sim. As propostas permitem adaptações, respeitando o contexto, a faixa etária e as necessidades das crianças.</p>`);
+    finalizarSessao();
+  }
+
+  else if(texto === "3"){
+    bot(`📦 <strong>SOBRE OS MATERIAIS DO PROGRAMA SOCIOEMOCIONAL</strong>
+<strong>O que são os portfólios de aprendizagens?</strong>
+<p>São materiais impressos destinados às crianças, utilizados para registros e acompanhamento das vivências realizadas ao longo do programa.</p>
+<strong>Quando utilizar os portfólios de aprendizagem?</strong>
+<p>Os portfólios de aprendizagem devem ser utilizados desde o início do programa, em sala de aula, junto aos educandos. Eles atuam de forma complementar ao Livro Digital de Sequências Didáticas do Professor ou às Sequências Didáticas disponibilizadas no ambiente virtual.</p>
+<strong>O que é o Livro Digital de Sequências Didáticas do Professor?</strong>
+<p>É um compilado das 12 Sequências Didáticas que estão disponíveis no ambiente virtual. Você, como professor, pode se orientar pelo Livro Digital de Sequências Didáticas do Professor ou pelas Sequências Didáticas disponibilizadas no ambiente virtual para realizar as propostas.</p>
+<strong>Quando utilizar o Livro Digital de Sequências Didáticas do Professor?</strong>
+<p>O Livro Digital de Sequências Didáticas do Professor deve ser utilizado desde o início do programa, como apoio ao trabalho em sala de aula. Ele orienta o professor sobre quando e como realizar as atividades no portfólio de aprendizagens, apresentando indicações claras para cada proposta e garantindo intencionalidade pedagógica e coerência no desenvolvimento das atividades.</p>
+<strong>Onde encontro recursos como músicas e histórias autorais?</strong>
+<p>Os recursos estão disponíveis no ambiente virtual, na seção chamada “Materiais”, ou como botões clicáveis, via link, em cada Sequência Didática.</p>
+<strong>Posso baixar os recursos?</strong>
+<p>Claro! 😊 É possível fazer o download dos materiais para utilização offline, incluindo o download das músicas.</p>`);
+    finalizarSessao();
+  }
+
+  else if(texto === "4"){
+    bot(`💻 <strong>SOBRE O AMBIENTE VIRTUAL DO PROGRAMA SOCIOEMOCIONAL</strong>
+<strong>O que é o Ambiente Virtual da Impare Educação?</strong>
+<p>É o espaço digital onde estão disponíveis os conteúdos do programa, bem como ferramentas de avaliação e registro de práticas compartilhadas.</p>
+<strong>Devo acessar o ambiente virtual pelo celular ou pelo computador?</strong>
+<p>Você pode acessar tanto pelo celular quanto pelo computador. O ambiente virtual está disponível na versão web, através do site (https://web.impare.com.br/
+), e na versão mobile, tanto para Android quanto para iOS. Para acessar, abra a loja de aplicativos do seu aparelho e procure pelo app “Impare Educação”.</p>
+<strong>O que é a aba “Compartilhando Práticas”?</strong>
+<p>É um espaço destinado ao compartilhamento de registros (fotos e vídeos) das experiências pedagógica e realizadas</p>`);
+    finalizarSessao();
+  }
+
+  else if(texto === "5"){
+    bot(`🎓 <strong>CURSO EAD E ENCONTROS DO PROGRAMA SOCIOEMOCIONAL</strong>
+<strong>Como funciona o curso EaD?</strong>
+<p>O curso EaD contribui com carga horária para a certificação e pode ser adaptado à sua rotina, permitindo flexibilidade no momento de assistir às aulas.</p>
+<strong>Os encontros formativos são presenciais ou online?</strong>
+<p>O programa contempla dois encontros presenciais e encontros de Orientações Metodológicas que serão online, com datas previamente informadas pelos grupos de WhatsApp.</p>
+<strong>Preciso participar dos encontros?</strong>
+<p>A participação é importante para o acompanhamento pedagógico e também para carga horária da certificação.</p>`);
+    finalizarSessao();
+  }
+
+  else if(texto === "6"){
+    bot(`📱 <strong>SOBRE OS GRUPOS DE WHATSAPP</strong>
+<strong>Para que servem os grupos de WhatsApp? Quantos grupos devo participar?</strong>
+<p>Cada participante deve estar no grupo geral dos participantes e no grupo específico da escola.</p>
+<strong>A participação é obrigatória?</strong>
+<p>É fortemente recomendada.</p>`);
+    finalizarSessao();
+  }
+
+  else if(texto === "7"){
+    bot(`📝 <strong>AVALIAÇÃO E CERTIFICAÇÃO</strong>
+<strong>Haverá avaliações no programa?</strong>
+<p>Sim. As avaliações fazem parte do processo de mensuração do desenvolvimento socioemocional dos educandos da sua turma.</p>
+<strong>Como funciona a avaliação?</strong>
+<p>O primeiro passo é cadastrar a sua turma na aba “Avaliação”, sendo o cadastro feito apenas uma vez. Ao final de cada Sequência Didática, será realizada a avaliação dos educandos de acordo com os indicativos de cada sequência.</p>
+<strong>Como funciona a certificação?</strong>
+<p>A certificação está vinculada à participação nos encontros presenciais, nos encontros online de Orientação Metodológica, à realização dos módulos do curso EaD, das Sequências Didáticas e das avaliações. Observação: também é contabilizado o engajamento com o ambiente virtual.</p>
+<strong>Quando recebo o certificado?</strong>
+<p>O certificado será encaminhado no dia 20 de novembro de 2026 para o e-mail cadastrado no ambiente virtual.</p>`);
+    finalizarSessao();
+  }
+
+  else if(texto === "8"){
+    bot(`⏰ <strong>PRAZOS DO PROGRAMA</strong>
+<strong>Quando começa e quando termina o Programa Socioemocional?</strong>
+<p>O programa inicia no dia 2/2/26 e finaliza no dia 20/11/26.</p>
+<strong>O que acontece após essa data?</strong>
+<p>O acesso ao ambiente virtual, com os conteúdos e ferramentas do programa, será encerrado após essa data.</p>`);
+    finalizarSessao();
+  }
+
+  else if(texto === "9"){
+    bot(`📞 <strong>SUPORTE E CONTATO</strong>
+<p>Se sua dúvida não foi esclarecida, não se preocupe! Retorne pelo WhatsApp (+55 55 9974-6270). Estou à disposição para ajudar com o que for necessário. 🧡</p>`);
+    finalizarSessao();
+  }
+
+  else{
+    bot(`<p>❗ Opção inválida. Digite um número de 1 a 9.</p>`);
+  }
+}
+
+/* Início do chat */
+apresentacao();
+setTimeout(mostrarMenu, 600);
+</script>
+
+</body>
+</html>
